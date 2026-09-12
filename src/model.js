@@ -1,9 +1,10 @@
+import { validateMotion } from "./motion-model.js";
 export const palettes = [
-  { name: "Botanical", paper: "#e6edb6", ink: "#294d3b", accent: "#ff7855" },
-  { name: "Studio blue", paper: "#c7d8f0", ink: "#203f82", accent: "#ff795d" },
-  { name: "Rosewater", paper: "#f4d3cf", ink: "#963c4f", accent: "#c35332" },
-  { name: "Butter", paper: "#f5df92", ink: "#5c452b", accent: "#e66935" },
-  { name: "Midnight", paper: "#303e50", ink: "#f5e7c9", accent: "#f9a76b" },
+  { name: "Blueprint", paper: "#b9d5ff", ink: "#142955", accent: "#436bdf" },
+  { name: "Electric", paper: "#446eff", ink: "#071431", accent: "#b5e7ff" },
+  { name: "Periwinkle", paper: "#c9caff", ink: "#303878", accent: "#697be8" },
+  { name: "Glacier", paper: "#a6e1ed", ink: "#164650", accent: "#487de2" },
+  { name: "Midnight", paper: "#203354", ink: "#d9e9ff", accent: "#86aaff" },
 ];
 export const templates = [
   {
@@ -86,6 +87,7 @@ export function validate(value) {
     if (Number.isFinite(value[key]))
       result[key] = Math.max(min, Math.min(max, value[key]));
   result.palette = Math.round(result.palette);
+  if (value.motion) result.motion = validateMotion(value.motion);
   return result;
 }
 export function encode(value) {
@@ -93,7 +95,7 @@ export function encode(value) {
   return btoa(Array.from(bytes, (b) => String.fromCharCode(b)).join(""));
 }
 export function decode(value) {
-  if (value.length > 6000) throw Error("This design link is too large.");
+  if (value.length > 24000) throw Error("This design link is too large.");
   return validate(
     JSON.parse(
       new TextDecoder().decode(

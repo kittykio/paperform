@@ -1,0 +1,228 @@
+[hidden] {
+  display: none !important;
+}
+.workspace-switch {
+  display: flex;
+  margin-bottom: 18px;
+  gap: 8px;
+}
+.workspace-switch .chosen {
+  background: #191919;
+  color: #a9d9ff;
+}
+#motion-studio {
+  display: grid;
+  grid-template-columns: 290px minmax(0, 1fr);
+  border: 2px solid #191919;
+  box-shadow: 6px 6px #191919;
+  background: #f9f8f3;
+}
+.motion-controls {
+  padding: 20px;
+  border-right: 2px solid #191919;
+  max-height: 890px;
+  overflow: auto;
+}
+.motion-controls input[type="color"] {
+  height: 36px;
+  width: 100%;
+  padding: 0;
+}
+.motion-controls input[type="number"] {
+  padding: 6px;
+}
+.motion-actions,
+.motion-pair {
+  display: flex;
+  gap: 10px;
+}
+.motion-pair > * {
+  flex: 1;
+  min-width: 0;
+}
+.motion-actions {
+  margin-bottom: 18px;
+}
+.motion-actions button {
+  font-size: 10px;
+}
+.motion-controls hr {
+  margin: 22px 0;
+  border: 0;
+  border-top: 1px solid #191919;
+}
+.motion-stage {
+  min-width: 0;
+  padding: 18px;
+  background: #d8d5ce;
+}
+.motion-toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-wrap: wrap;
+  margin-bottom: 15px;
+}
+.motion-toolbar span {
+  margin-right: auto;
+  font-size: 10px;
+}
+.motion-toolbar button {
+  font-size: 10px;
+}
+.poster-wrap {
+  height: 490px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: repeating-linear-gradient(
+    45deg,
+    #00000005 0px,
+    #00000005 1px,
+    transparent 1px,
+    transparent 12px
+  );
+  overflow: hidden;
+}
+#poster {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  box-shadow: 5px 5px 15px #0003;
+  touch-action: none;
+  cursor: move;
+}
+.motion-transport {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  padding: 14px 0;
+}
+.motion-transport > input[type="range"] {
+  flex: 1;
+  min-width: 90px;
+}
+.motion-transport label {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  margin: 0;
+}
+.motion-transport input[type="number"] {
+  width: 55px;
+  margin: 0;
+}
+.motion-transport output {
+  font-size: 11px;
+}
+.motion-transport button {
+  font-size: 11px;
+}
+.track {
+  display: block;
+  position: relative;
+  width: 100%;
+  height: 34px;
+  margin: 4px 0;
+  background: #f0eee7;
+  padding: 0;
+  overflow: hidden;
+}
+.track span {
+  position: relative;
+  z-index: 1;
+  float: left;
+  background: #191919;
+  color: white;
+  padding: 8px;
+  font-size: 10px;
+}
+.track i {
+  position: absolute;
+  top: 3px;
+  bottom: 3px;
+  background: #a9d9ff;
+  font: 10px monospace;
+  padding: 5px;
+  border: 1px solid #191919;
+}
+.track.chosen {
+  outline: 2px solid #5687ff;
+}
+.motion-files {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  flex-wrap: wrap;
+}
+.motion-files button {
+  font-size: 10px;
+}
+.motion-files label {
+  margin: 0;
+  max-width: 230px;
+}
+.motion-files input {
+  font-size: 10px;
+  max-width: 100%;
+}
+#motion-status {
+  font-size: 11px;
+  line-height: 1.5;
+}
+#video-result video {
+  width: 100%;
+  max-height: 400px;
+  margin-top: 16px;
+}
+#video-result a {
+  display: block;
+  padding: 12px;
+  background: #a9d9ff;
+  color: #191919;
+  font-weight: bold;
+  text-align: center;
+}
+#fold-motion {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  width: 450px;
+  height: 350px;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+@media (max-width: 760px) {
+  #motion-studio {
+    display: flex;
+    flex-direction: column;
+  }
+  .motion-stage {
+    order: -1;
+    padding: 12px;
+  }
+  .poster-wrap {
+    height: 340px;
+  }
+  .motion-controls {
+    border: 0;
+    border-top: 2px solid #191919;
+    max-height: none;
+  }
+  .motion-transport {
+    gap: 8px;
+  }
+  .workspace-switch button {
+    font-size: 10px;
+    padding: 10px;
+  }
+  .motion-toolbar span {
+    width: 100%;
+  }
+  .motion-transport label {
+    font-size: 9px;
+  }
+}

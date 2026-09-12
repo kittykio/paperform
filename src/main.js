@@ -1,4 +1,7 @@
+import { mountMotion } from "./motion.js";
+let motion;
 import "./style.css";
+import "./studio.css";
 import {
   palettes,
   templates,
@@ -33,7 +36,7 @@ try {
     "Couldn’t load that design. Your studio is ready for a fresh start.";
 }
 $("#app").innerHTML =
-  `<header><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform<span>STUDIO</span></a><span class="header-note">A little paper. Endless possibilities.</span><div class="header-actions"><span id="saved">Saved on this device</span><button id="share">↗ Share design</button><button class="primary" id="export">Export <span>↓</span></button></div></header><main><div class="intro"><div><p class="kicker">THE PAPER PLAYGROUND</p><h1>Make your words <em>unfold.</em></h1><p>Flat is just the beginning. Make something worth opening.</p></div><button id="new" class="quiet">↺ Start fresh</button></div><section class="workspace"><aside class="editor"><div class="tabs"><button data-tab="design" class="active">Design</button><button data-tab="paper">Paper & fold</button></div><div id="controls"></div><div class="editor-tip"><span>✦</span><p>Made to be opened.<br><small>Drag the slider to reveal your creation.</small></p></div></aside><section class="preview" aria-label="Interactive card preview"><div class="preview-top"><span><i></i> LIVE PAPER PREVIEW</span><button id="reset-view" class="quiet">↺ Reset view</button></div><div id="scene"><div id="card"><div class="base"><span class="card-eyebrow"></span><span class="card-note"></span><span class="card-signature"></span><span class="crease"></span></div><div class="art"><div class="motif"></div><h2 id="card-title"></h2></div><div class="flap left"><span>PAPERFORM<br>OPEN A LITTLE WONDER ↗</span></div><div class="flap right"></div></div></div><div class="preview-bottom"><span>YOUR WORDS, WITH ANOTHER DIMENSION</span><label>View <input id="rotation" type="range" min="-25" max="25" aria-label="Rotate preview"></label></div><div class="playback"><button id="play" aria-label="Play unfolding animation">▶</button><span>Closed</span><input id="opening" aria-label="Card opening" type="range" min="0" max="100"><span>Open</span><output id="percent"></output></div></section></section><section class="templates"><div class="section-heading"><h2>A starting point for your imagination.</h2><span>CHOOSE A TEMPLATE, MAKE IT YOURS</span></div><div class="template-grid">${templates.map((t, i) => `<button class="template" data-template="${i}"><div class="mini" style="--paper:${palettes[t.palette].paper};--ink:${palettes[t.palette].ink}"><span>${esc(t.title).replaceAll("\n", "<br>")}</span><b>${["✺", "✦", "♥", "✺"][i]}</b></div><div class="template-caption"><strong>${t.name}</strong><small>${t.kind} ↗</small></div></button>`).join("")}</div></section></main><footer><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform</a><span>Small creations. Real connections.</span><span>Crafted in your browser · No account needed</span></footer><div id="toast" role="status"></div><dialog id="export-dialog"><form method="dialog"><button class="close" aria-label="Close export">×</button></form><p class="kicker">SEND A LITTLE WONDER</p><h2>Off the canvas.<br>Into the world.</h2><p>Choose how your creation leaves the studio.</p><button id="png" class="export-option"><b>↓ Image postcard</b><small>A high-resolution PNG of your flat design.</small></button><button id="print" class="export-option"><b>▧ Printable card</b><small>A foldable paper card, with a center-fold guide.</small></button><button id="json" class="export-option"><b>◇ Editable design</b><small>Save a backup and keep creating later.</small></button><label class="import">Import a design <input id="import" type="file" accept=".json,application/json"></label><p class="fine">For an animated reveal, use Share design. Printed cards use a simple center fold.</p></dialog>`;
+  `<header><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform<span>STUDIO</span></a><span class="header-note">WORDS OFF THE PAGE.</span><div class="header-actions"><span id="saved">Saved on this device</span><button id="share">↗ Share design</button><button class="primary" id="export">Export <span>↓</span></button></div></header><main><div class="intro"><div><p class="kicker">INDEPENDENT PAPER & TYPE STUDIO / VOL. 01</p><h1>THINK FLAT.<br><em>MAKE LOUD.</em></h1><p>TYPE IT. FOLD IT. SEND IT. — Give your words a third dimension.</p></div><button id="new" class="quiet">↺ Start fresh</button></div><section class="workspace"><aside class="editor"><div class="tabs"><button data-tab="design" class="active">Design</button><button data-tab="paper">Paper & fold</button></div><div id="controls"></div><div class="editor-tip"><span>✦</span><p>Made to be opened.<br><small>Drag the slider to reveal your creation.</small></p></div></aside><section class="preview" aria-label="Interactive card preview"><div class="preview-top"><span><i></i> LIVE PAPER PREVIEW</span><button id="reset-view" class="quiet">↺ Reset view</button></div><div id="scene"><div id="card"><div class="base"><span class="card-eyebrow"></span><span class="card-note"></span><span class="card-signature"></span><span class="crease"></span></div><div class="art"><div class="motif"></div><h2 id="card-title"></h2></div><div class="flap left"><span>PAPERFORM<br>OPEN A LITTLE WONDER ↗</span></div><div class="flap right"></div></div></div><div class="preview-bottom"><span>YOUR WORDS, WITH ANOTHER DIMENSION</span><label>View <input id="rotation" type="range" min="-25" max="25" aria-label="Rotate preview"></label></div><div class="playback"><button id="play" aria-label="Play unfolding animation">▶</button><span>Closed</span><input id="opening" aria-label="Card opening" type="range" min="0" max="100"><span>Open</span><output id="percent"></output></div></section></section><section class="templates"><div class="section-heading"><h2>GOOD DESIGN STARTS SOMEWHERE.</h2><span>CHOOSE A TEMPLATE, MAKE IT YOURS</span></div><div class="template-grid">${templates.map((t, i) => `<button class="template" data-template="${i}"><div class="mini" style="--paper:${palettes[t.palette].paper};--ink:${palettes[t.palette].ink}"><span>${esc(t.title).replaceAll("\n", "<br>")}</span><b>${["✺", "✦", "♥", "✺"][i]}</b></div><div class="template-caption"><strong>${t.name}</strong><small>${t.kind} ↗</small></div></button>`).join("")}</div></section></main><footer><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform</a><span>NO SMALL IDEAS. JUST SMALL PIECES OF PAPER.</span><span>Crafted in your browser · No account needed</span></footer><div id="toast" role="status"></div><dialog id="export-dialog"><form method="dialog"><button class="close" aria-label="Close export">×</button></form><p class="kicker">SEND A LITTLE WONDER</p><h2>Off the canvas.<br>Into the world.</h2><p>Choose how your creation leaves the studio.</p><button id="png" class="export-option"><b>↓ Image postcard</b><small>A high-resolution PNG of your flat design.</small></button><button id="print" class="export-option"><b>▧ Printable card</b><small>A foldable paper card, with a center-fold guide.</small></button><button id="json" class="export-option"><b>◇ Editable design</b><small>Save a backup and keep creating later.</small></button><label class="import">Import a design <input id="import" type="file" accept=".json,application/json"></label><p class="fine">For an animated reveal, use Share design. Printed cards use a simple center fold.</p></dialog>`;
 function notify(text) {
   $("#toast").textContent = text;
   $("#toast").classList.add("show");
@@ -41,6 +44,7 @@ function notify(text) {
   notify.timer = setTimeout(() => $("#toast").classList.remove("show"), 3500);
 }
 function save() {
+  if (motion) state.motion = motion.getDesign();
   try {
     localStorage.setItem("paperform-v1", JSON.stringify(state));
     $("#saved").textContent = "Saved on this device";
@@ -78,6 +82,7 @@ function controls() {
           )}</div><label>Paper embellishment<select data-key="motif">${["flower", "star", "heart", "none"].map((v) => `<option ${s.motif === v ? "selected" : ""}>${v}</option>`).join("")}</select></label>`;
 }
 function render() {
+  motion?.syncFold(state.opening);
   const p = palettes[state.palette],
     card = $("#card");
   card.style.setProperty("--paper", p.paper);
@@ -201,6 +206,10 @@ document.addEventListener("click", (e) => {
   }
 });
 $("#new").onclick = () => {
+  if (motion?.isActive()) {
+    motion.reset();
+    return;
+  }
   if (
     !confirm(
       "Start fresh? Export your current design first if you’d like to keep it.",
@@ -213,8 +222,13 @@ $("#new").onclick = () => {
   render();
   save();
 };
-$("#export").onclick = () => $("#export-dialog").showModal();
+$("#export").onclick = () =>
+  motion?.isActive() ? motion.export() : $("#export-dialog").showModal();
 $("#share").onclick = async () => {
+  if (motion?.isActive()) {
+    motion.share();
+    return;
+  }
   const url = location.origin + location.pathname + "#design=" + encode(state);
   try {
     await navigator.clipboard.writeText(url);
@@ -240,10 +254,11 @@ $("#import").onchange = async (e) => {
   try {
     const f = e.target.files[0];
     if (!f) return;
-    if (f.size > 12000) throw Error("Design file is too large.");
+    if (f.size > 24000) throw Error("Design file is too large.");
     const next = validate(JSON.parse(await f.text()));
     stop();
     state = next;
+    if (next.motion) motion?.load(next.motion);
     controls();
     render();
     save();
@@ -355,3 +370,17 @@ document.addEventListener("visibilitychange", () => {
 controls();
 render();
 if (startMessage) notify(startMessage);
+
+motion = mountMotion({
+  getCard: () => ({
+    ...state,
+    ink: palettes[state.palette].ink,
+    paper: palettes[state.palette].paper,
+  }),
+  notify,
+  stopFold: stop,
+  onChange: (design) => {
+    state.motion = design;
+    save();
+  },
+});
