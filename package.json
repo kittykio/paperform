@@ -1,0 +1,17 @@
+{
+  "name": "paperform",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "license": "MIT",
+  "description": "An interactive paper and typography studio. Design dimensional cards, unfold your words, and share a little wonder.",
+  "scripts": {
+    "dev": "vite --host 127.0.0.1",
+    "build": "vite build",
+    "preview": "vite preview --host 127.0.0.1",
+    "test": "node --test"
+  },
+  "devDependencies": {
+    "vite": "^8.2.2"
+  }
+}
