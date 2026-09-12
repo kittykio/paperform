@@ -7,6 +7,16 @@ export const palettes = [
   { name: "Matcha", paper: "#cce0ae", ink: "#304931", accent: "#8763b8" },
   { name: "Apricot", paper: "#f1c4a0", ink: "#573e30", accent: "#526cc1" },
 ];
+palettes.push(
+  { name: "Midnight", paper: "#203354", ink: "#e4edff", accent: "#e6b36a" },
+  { name: "Rose", paper: "#edc4d4", ink: "#55354b", accent: "#7766bc" },
+  { name: "Ocean", paper: "#afdcd9", ink: "#204b50", accent: "#9a6baf" },
+  { name: "Parchment", paper: "#efe2c7", ink: "#493c30", accent: "#74834a" },
+  { name: "Monochrome", paper: "#eeeeea", ink: "#242428", accent: "#777784" },
+);
+export function cardColors(state) {
+  return { ...palettes[state.palette], ...state.customColors };
+}
 export const templates = [
   {
     id: "bloom",
@@ -173,10 +183,23 @@ templates.push(
     ],
   },
 );
+const templateDirections = [
+ {palette:1,font:'bebas',layout:'split',title:'HELLO,\nSUNSHINE.',pattern:'plain',motif:'none',stickers:[{kind:'sun',x:.8,y:.46,size:135,rotation:0,color:'#8a6ac1'}]},
+ {palette:5,font:'rubik',layout:'poster',title:'MAKE\nSOME\nNOISE.',pattern:'grid',motif:'none',stickers:[{kind:'bolt',x:.88,y:.76,size:75,rotation:12,color:'#e6b36a'}]},
+ {palette:6,font:'script',layout:'center',title:'You & me.',pattern:'plain',motif:'none',frame:'double',stickers:[{kind:'heart',x:.5,y:.7,size:50,rotation:0,color:'#93658b'}]},
+ {palette:3,font:'space',layout:'left',title:'a big\nlittle thanks.',pattern:'speckle',motif:'none',frame:'corners',stickers:[{kind:'clover',x:.84,y:.67,size:95,rotation:-18,color:'#658556'}]},
+ {palette:4,font:'bebas',layout:'poster',title:'ANOTHER\nGREAT YEAR.',pattern:'confetti',motif:'none',frame:'none',stickers:[{kind:'star',x:.88,y:.22,size:45,rotation:15,color:'#526cc1'}]},
+ {palette:9,font:'dm',layout:'left',title:'AFTER\nHOURS_01',pattern:'plain',motif:'none',frame:'line',stickers:[{kind:'circle',x:.83,y:.44,size:125,rotation:0,color:'#929099'}]},
+ {palette:7,font:'script',layout:'split',title:'Take it\neasy.',pattern:'waves',motif:'none',frame:'none',stickers:[{kind:'cloud',x:.82,y:.43,size:120,rotation:-8,color:'#568f9a'}]},
+ {palette:0,font:'space',layout:'center',title:'THE SUNDAY\nMARKET',pattern:'stripes',motif:'none',frame:'double',stickers:[{kind:'flower',x:.12,y:.7,size:44,rotation:0,color:'#7860cf'},{kind:'flower',x:.88,y:.7,size:44,rotation:20,color:'#7860cf'}]},
+ {palette:8,font:'fraunces',layout:'letter',title:'Dear friend,',pattern:'speckle',motif:'none',frame:'none',stickers:[{kind:'heart',x:.84,y:.76,size:28,rotation:-10,color:'#74834a'}]},
+ {palette:2,font:'rubik',layout:'split',title:'NEXT\nCHAPTER.',pattern:'checker',motif:'none',frame:'corners',stickers:[{kind:'arrow',x:.84,y:.44,size:105,rotation:-35,color:'#3d8070'}]},
+];
+templates.forEach((t,i)=>Object.assign(t,templateDirections[i]));
 export const defaults = {
   ...templates[0],
   frame: "none",
-  stickers: [],
+  stickers: structuredClone(templates[0].stickers??[]),
   size: 66,
   opening: 78,
   pattern: "plain",
@@ -192,13 +215,14 @@ export function validate(value) {
       result[key] = value[key].slice(0, key === "title" ? 90 : 160);
   for (const [key, options] of Object.entries({
     fold: ["popup", "accordion", "gate"],
+    layout:["center","split","poster","left","letter"],
     motif: ["flower", "star", "heart", "none"],
     font: Object.keys(fonts),
     pattern: patterns,
   }))
     if (options.includes(value[key])) result[key] = value[key];
   for (const [key, min, max] of [
-    ["palette", 0, 4],
+    ["palette", 0, palettes.length - 1],
     ["size", 34, 88],
     ["opening", 0, 100],
     ["rotation", -25, 25],
@@ -206,6 +230,13 @@ export function validate(value) {
     if (Number.isFinite(value[key]))
       result[key] = Math.max(min, Math.min(max, value[key]));
   result.palette = Math.round(result.palette);
+  if (value.customColors && typeof value.customColors === "object") {
+    const colors = {};
+    for (const key of ["paper", "ink", "accent"])
+      if (/^#[0-9a-f]{6}$/i.test(value.customColors[key]))
+        colors[key] = value.customColors[key];
+    if (Object.keys(colors).length) result.customColors = colors;
+  }
   Object.assign(result, sanitizeMaterials(value));
   if (value.motion) result.motion = validateMotion(value.motion);
   return result;

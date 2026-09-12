@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { defaults, validate, encode, decode } from "../src/model.js";
+import { defaults, validate, encode, decode, palettes } from "../src/model.js";
 test("Unicode designs survive sharing", () => {
   const state = { ...defaults, title: "こんにちは 🌷\nFor you" };
   assert.deepEqual(decode(encode(state)), validate(state));
@@ -16,8 +16,8 @@ test("Imported controls are bounded and unknown fields discarded", () => {
   });
   assert.equal(state.opening, 100);
   assert.equal(state.size, 34);
-  assert.equal(state.palette, 4);
-  assert.equal(state.font, "serif");
+  assert.equal(state.palette, palettes.length - 1);
+  assert.equal(state.font, defaults.font);
   assert.equal(state.title.length, 90);
   assert.equal(state.unexpected, undefined);
 });

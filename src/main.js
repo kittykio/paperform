@@ -1,3 +1,4 @@
+import {drawCard} from "./card-art.js";
 import {
   fonts,
   patterns,
@@ -14,6 +15,7 @@ import "./style.css";
 import "./studio.css";
 import {
   palettes,
+  cardColors,
   templates,
   defaults,
   validate,
@@ -46,7 +48,7 @@ try {
     "Couldn’t load that design. Your studio is ready for a fresh start.";
 }
 $("#app").innerHTML =
-  `<header><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform<span>STUDIO</span></a><span class="header-note">WORDS OFF THE PAGE.</span><div class="header-actions"><span id="saved">Saved on this device</span><button id="share">↗ Share design</button><button class="primary" id="export">Export <span>↓</span></button></div></header><main><div class="intro"><div><p class="kicker">INDEPENDENT PAPER & TYPE STUDIO / VOL. 01</p><h1>THINK FLAT.<br><em>MAKE LOUD.</em></h1><p>TYPE IT. FOLD IT. SEND IT. — Give your words a third dimension.</p></div><button id="new" class="quiet">↺ Start fresh</button></div><section class="workspace"><aside class="editor"><div class="tabs"><button data-tab="design" class="active">Design</button><button data-tab="paper">Paper & fold</button><button data-tab="materials">Materials</button></div><div id="controls"></div><div class="editor-tip"><span>✦</span><p>Made to be opened.<br><small>Drag the slider to reveal your creation.</small></p></div></aside><section class="preview" aria-label="Interactive card preview"><div class="preview-top"><span><i></i> LIVE PAPER PREVIEW</span><button id="reset-view" class="quiet">↺ Reset view</button></div><div id="scene"><div id="card"><div class="base"><canvas id="materials-layer" width="960" height="680" aria-hidden="true"></canvas><span class="card-eyebrow"></span><span class="card-note"></span><span class="card-signature"></span><span class="crease"></span></div><div class="art"><div class="motif"></div><h2 id="card-title"></h2></div><div class="flap left"><span>PAPERFORM<br>OPEN A LITTLE WONDER ↗</span></div><div class="flap right"></div></div></div><div class="preview-bottom"><span>YOUR WORDS, WITH ANOTHER DIMENSION</span><label>View <input id="rotation" type="range" min="-25" max="25" aria-label="Rotate preview"></label></div><div class="playback"><button id="play" aria-label="Play unfolding animation">▶</button><span>Closed</span><input id="opening" aria-label="Card opening" type="range" min="0" max="100"><span>Open</span><output id="percent"></output></div></section></section><section class="templates"><div class="section-heading"><h2>GOOD DESIGN STARTS SOMEWHERE.</h2><span>CHOOSE A TEMPLATE, MAKE IT YOURS</span></div><div class="template-grid">${templates.map((t, i) => `<button class="template" data-template="${i}"><div class="mini" style="--paper:${palettes[t.palette].paper};--ink:${palettes[t.palette].ink}"><span>${esc(t.title).replaceAll("\n", "<br>")}</span><b>${{ flower: "✺", star: "✦", heart: "♥", none: "◇" }[t.motif]}</b></div><div class="template-caption"><strong>${t.name}</strong><small>${t.kind} ↗</small></div></button>`).join("")}</div></section></main><footer><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform</a><span>NO SMALL IDEAS. JUST SMALL PIECES OF PAPER.</span><span>Crafted in your browser · No account needed</span></footer><div id="toast" role="status"></div><dialog id="export-dialog"><form method="dialog"><button class="close" aria-label="Close export">×</button></form><p class="kicker">SEND A LITTLE WONDER</p><h2>Off the canvas.<br>Into the world.</h2><p>Choose how your creation leaves the studio.</p><button id="png" class="export-option"><b>↓ Image postcard</b><small>A high-resolution PNG of your flat design.</small></button><button id="print" class="export-option"><b>▧ Printable card</b><small>A foldable paper card, with a center-fold guide.</small></button><button id="json" class="export-option"><b>◇ Editable design</b><small>Save a backup and keep creating later.</small></button><label class="import">Import a design <input id="import" type="file" accept=".json,application/json"></label><p class="fine">For an animated reveal, use Share design. Printed cards use a simple center fold.</p></dialog>`;
+  `<header><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform<span>STUDIO</span></a><span class="header-note">WORDS OFF THE PAGE.</span><div class="header-actions"><span id="saved">Saved on this device</span><button id="share">↗ Share design</button><button class="primary" id="export">Export <span>↓</span></button></div></header><main><div class="intro"><div><p class="kicker">INDEPENDENT PAPER & TYPE STUDIO / VOL. 01</p><h1>THINK FLAT.<br><em>MAKE LOUD.</em></h1><p>TYPE IT. FOLD IT. SEND IT. — Give your words a third dimension.</p></div><button id="new" class="quiet">↺ Start fresh</button></div><section class="workspace"><aside class="editor"><div class="tabs"><button data-tab="design" class="active">Design</button><button data-tab="paper">Paper & fold</button><button data-tab="materials">Materials</button></div><div id="controls"></div><div class="editor-tip"><span>✦</span><p>Made to be opened.<br><small>Drag the slider to reveal your creation.</small></p></div></aside><section class="preview" aria-label="Interactive card preview"><div class="preview-top"><span><i></i> LIVE PAPER PREVIEW</span><button id="reset-view" class="quiet">↺ Reset view</button></div><div id="scene"><div id="card"><div class="base"><canvas id="materials-layer" width="960" height="680" aria-hidden="true"></canvas><span class="card-eyebrow"></span><span class="card-note"></span><span class="card-signature"></span><span class="crease"></span></div><div class="art"><div class="motif"></div><h2 id="card-title"></h2></div><div class="flap left"><span>PAPERFORM<br>OPEN A LITTLE WONDER ↗</span></div><div class="flap right"></div></div></div><div class="preview-bottom"><span>YOUR WORDS, WITH ANOTHER DIMENSION</span><label>View <input id="rotation" type="range" min="-25" max="25" aria-label="Rotate preview"></label></div><div class="playback"><button id="play" aria-label="Play unfolding animation">▶</button><span>Closed</span><input id="opening" aria-label="Card opening" type="range" min="0" max="100"><span>Open</span><output id="percent"></output></div></section></section><section class="templates"><div class="section-heading"><h2>GOOD DESIGN STARTS SOMEWHERE.</h2><span>CHOOSE A TEMPLATE, MAKE IT YOURS</span></div><div class="template-grid">${templates.map((t, i) => `<button class="template" data-template="${i}"><div class="mini"><canvas data-template-preview="${i}" width="720" height="510" aria-hidden="true"></canvas></div><div class="template-caption"><strong>${t.name}</strong><small>${t.kind} ↗</small></div></button>`).join("")}</div></section></main><footer><a class="brand" href="${location.pathname}"><img src="/mark.svg" alt="">paperform</a><span>NO SMALL IDEAS. JUST SMALL PIECES OF PAPER.</span><span>Crafted in your browser · No account needed</span></footer><div id="toast" role="status"></div><dialog id="export-dialog"><form method="dialog"><button class="close" aria-label="Close export">×</button></form><p class="kicker">SEND A LITTLE WONDER</p><h2>Off the canvas.<br>Into the world.</h2><p>Choose how your creation leaves the studio.</p><button id="png" class="export-option"><b>↓ Image postcard</b><small>A high-resolution PNG of your flat design.</small></button><button id="print" class="export-option"><b>▧ Printable card</b><small>A foldable paper card, with a center-fold guide.</small></button><button id="json" class="export-option"><b>◇ Editable design</b><small>Save a backup and keep creating later.</small></button><label class="import">Import a design <input id="import" type="file" accept=".json,application/json"></label><p class="fine">For an animated reveal, use Share design. Printed cards use a simple center fold.</p></dialog>`;
 function notify(text) {
   $("#toast").textContent = text;
   $("#toast").classList.add("show");
@@ -80,7 +82,18 @@ function controls() {
           .join(
             "",
           )}</select></label><div class="font-specimen" style='font-family:${fonts[s.font].family}'>Aa / Make it yours.</div><label class="range-label">Letter size <output id="size-output">${s.size}</output><input type="range" data-key="size" min="34" max="88" value="${s.size}"></label><label>Sign it off<input data-key="signature" maxlength="160" value="${esc(s.signature)}"></label>`
-      : `<div class="control-heading"><span>01</span><h2>Pick your paper</h2></div><div class="swatches">${palettes.map((p, i) => `<button data-palette="${i}" aria-label="${p.name}" title="${p.name}" class="${s.palette === i ? "selected" : ""}" style="--swatch:${p.paper};background:${p.paper};color:${p.ink}">Aa</button>`).join("")}</div><p class="fine">${palettes[s.palette].name}</p><label>Paper texture<select data-key="pattern">${patterns.map((v) => `<option ${s.pattern === v ? "selected" : ""}>${v}</option>`).join("")}</select></label><div class="control-heading"><span>02</span><h2>A different dimension</h2></div><div class="fold-options">${[
+      : `<div class="control-heading"><span>01</span><h2>Pick your paper</h2></div><div class="swatches">${palettes.map((p, i) => `<button data-palette="${i}" aria-label="${p.name}" title="${p.name}" class="${s.palette === i ? "selected" : ""}" style="--swatch:${p.paper};background:${p.paper};color:${p.ink}">Aa</button>`).join("")}</div><p class="fine">${palettes[s.palette].name}${s.customColors ? " · customized" : ""}</p><div class="custom-card-colors">${[
+          ["paper", "Paper"],
+          ["ink", "Text & frame"],
+          ["accent", "Accent"],
+        ]
+          .map(
+            ([key, label]) =>
+              `<div><label>${label}<input type="color" data-card-color="${key}" value="${cardColors(s)[key]}"></label><input type="text" aria-label="${label} hex color" data-color-hex="${key}" value="${cardColors(s)[key]}" maxlength="7" spellcheck="false"></div>`,
+          )
+          .join(
+            "",
+          )}</div><button id="reset-card-colors" type="button">Reset to preset colors</button><label>Paper texture<select data-key="pattern">${patterns.map((v) => `<option ${s.pattern === v ? "selected" : ""}>${v}</option>`).join("")}</select></label><div class="control-heading"><span>02</span><h2>A different dimension</h2></div><div class="fold-options">${[
           ["popup", "↗", "Pop-up", "Words rise from the page"],
           ["accordion", "≋", "Accordion", "A concertina of lettering"],
           ["gate", "◫", "Gatefold", "An opening worth waiting for"],
@@ -95,7 +108,7 @@ function controls() {
 }
 function render() {
   motion?.syncFold(state.opening);
-  const p = palettes[state.palette],
+  const p = cardColors(state),
     card = $("#card");
   card.style.setProperty("--paper", p.paper);
   card.style.setProperty("--ink", p.ink);
@@ -104,6 +117,7 @@ function render() {
   card.style.setProperty("--rotation", state.rotation + "deg");
   card.dataset.fold = state.fold;
   card.dataset.pattern = "plain";
+  card.dataset.layout=state.layout??"center";
   const materials = $("#materials-layer");
   paintMaterials(materials.getContext("2d"), 960, 680, state, p);
   $("#card-title").replaceChildren(
@@ -195,6 +209,7 @@ document.addEventListener("click", (e) => {
   for (const key of ["font", "fold", "palette"])
     if (b.dataset[key] !== undefined) {
       state[key] = key === "palette" ? +b.dataset[key] : b.dataset[key];
+      if (key === "palette") delete state.customColors;
       controls();
       render();
       save();
@@ -280,46 +295,7 @@ $("#import").onchange = async (e) => {
   }
   e.target.value = "";
 };
-function artwork() {
-  const c = document.createElement("canvas");
-  c.width = 1600;
-  c.height = 1100;
-  const ctx = c.getContext("2d"),
-    p = palettes[state.palette];
-  paintMaterials(ctx, c.width, c.height, state, p);
-  ctx.fillStyle = p.ink;
-  ctx.textAlign = "center";
-  function text(value, y, size, font, maxWidth) {
-    ctx.font = font.replace("SIZE", size);
-    for (const para of value.split("\n")) {
-      let line = "";
-      for (const ch of para) {
-        if (ctx.measureText(line + ch).width > maxWidth) {
-          ctx.fillText(line, 800, y);
-          y += size * 1.1;
-          line = ch;
-        } else line += ch;
-      }
-      ctx.fillText(line, 800, y);
-      y += size * 1.1;
-    }
-    return y;
-  }
-  text(state.eyebrow, 100, 22, "SIZEpx Arial", 1400);
-  const lines = state.title.split("\n").length;
-  const size = Math.min(state.size * 2, 380 / Math.max(lines, 1));
-  text(state.title, 350, size, `bold SIZEpx ${fonts[state.font].family}`, 1350);
-  text(state.note, 860, 28, "SIZEpx Georgia", 1300);
-  text(state.signature, 1020, 20, "SIZEpx Arial", 1300);
-  ctx.fillStyle = p.accent;
-  ctx.font = "130px Georgia";
-  ctx.fillText(
-    { flower: "✺", star: "✦", heart: "♥", none: "" }[state.motif],
-    1400,
-    740,
-  );
-  return c;
-}
+function artwork(){const canvas=document.createElement('canvas');canvas.width=1600;canvas.height=1133;drawCard(canvas,state);return canvas;}
 $("#png").onclick = () => {
   let preview = $("#postcard-result");
   if (!preview) {
@@ -365,8 +341,8 @@ if (startMessage) notify(startMessage);
 motion = mountMotion({
   getCard: () => ({
     ...state,
-    ink: palettes[state.palette].ink,
-    paper: palettes[state.palette].paper,
+    ink: cardColors(state).ink,
+    paper: cardColors(state).paper,
   }),
   notify,
   stopFold: stop,
@@ -460,3 +436,32 @@ Promise.all(
     document.fonts.load(`700 40px ${f.family}`).catch(() => []),
   ),
 ).then(() => render());
+
+document.addEventListener("input", (e) => {
+  const key = e.target.dataset.cardColor ?? e.target.dataset.colorHex;
+  if (!key) return;
+  const raw = e.target.value;
+  const valid = /^#[0-9a-f]{6}$/i.test(raw);
+  e.target.setAttribute("aria-invalid", String(!valid));
+  if (!valid) return;
+  state.customColors = { ...state.customColors, [key]: raw };
+  document
+    .querySelectorAll(`[data-card-color="${key}"], [data-color-hex="${key}"]`)
+    .forEach((el) => {
+      if (el !== e.target) el.value = raw;
+      el.setAttribute("aria-invalid", "false");
+    });
+  render();
+  save();
+});
+document.addEventListener("click", (e) => {
+  if (e.target.closest("#reset-card-colors")) {
+    delete state.customColors;
+    controls();
+    render();
+    save();
+  }
+});
+
+function renderTemplateGallery(){document.querySelectorAll('[data-template-preview]').forEach(canvas=>drawCard(canvas,{...defaults,...templates[+canvas.dataset.templatePreview]}));}
+renderTemplateGallery();document.fonts.ready.then(renderTemplateGallery);

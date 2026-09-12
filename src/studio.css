@@ -873,3 +873,58 @@ dialog > p:not(.kicker),
 #motion-time {
   accent-color: var(--butter);
 }
+
+/* Neutral graphite supports blue branding, lilac editing, and mint actions. */
+:root { --mint:#9ad8c0; --butter:#cbb8ef; --lilac:#cbb8ef; }
+body,header { background:#14151b; }
+main { color:#eeedf2; }
+.intro .kicker,.header-note,.intro p:last-child { color:#b2adbd; }
+.intro .quiet { background:#292438; color:#dbcaef; border-color:#77648c; }
+.workspace,.editor,.motion-controls { background:#202128; }
+.editor,.motion-controls { border-color:#51525f; }
+.tabs button { color:#c8c4d0; }
+.control-heading span { background:#cbb8ef; color:#30243e; }
+.control-heading h2,.section-heading h2 { color:#eeedf2; }
+label { color:#c8c4d0; }
+label>span,.fine,.editor-tip p,.editor-tip small,.fold-options small { color:#aaa6b5; }
+input:not([type=range],[type=file]),textarea,select { background:#181920; border-color:#50505e; color:#eeedf2; }
+.primary,.primary:hover,#poster-video,#video-result a,.save-png { background:#9ad8c0; color:#18362c; border-color:#b6ead5; box-shadow:3px 3px #35584c; }
+.primary:hover,#poster-video:hover { background:#b6ead5; }
+.preview,.motion-stage { background-color:#292a33; }
+.preview { background-image:linear-gradient(#cbb8ef0d 1px,transparent 1px),linear-gradient(90deg,#cbb8ef0d 1px,transparent 1px); }
+.preview-top { border-color:#555460; }
+.preview-top>span,.preview-bottom>span,.preview-bottom label,.quiet { color:#bbb6c8; }
+.preview-top i { background:#9ad8c0; }
+.playback { background:#191a22; }
+.playback button,.playback button:hover,#motion-play { background:#cbb8ef; color:#30243e; border-color:#dfcff7; }
+.playback button:hover,#motion-play:hover { background:#dfcff7; }
+.playback input[type=range],#motion-time { accent-color:#cbb8ef; }
+.playback output { color:#dfcff7; }
+.segmented .selected,.fold-options .selected { background:#352d46!important; color:#e6d9f8!important; border-color:#cbb8ef!important; box-shadow:2px 2px #6a587e; }
+.section-heading span,.template-caption small { color:#aaa6b5; }
+.template { background:#23242c; border-color:#555460; }
+.template:hover { background:#312c3e; box-shadow:5px 5px #a897d4; }
+.template-caption strong { color:#eeedf2; }
+.poster-wrap { background:repeating-linear-gradient(45deg,#cbb8ef09 0,#cbb8ef09 1px,transparent 1px,transparent 12px); }
+.motion-toolbar>span,#motion-status { color:#bbb6c8; }
+#poster-png,#motion-save { color:#cbb8ef; border-color:#77648c; }
+.track:nth-child(3n) i { background:#375587; color:#e4ecff; border-color:#7798d9; }
+footer { background:#1c1d25; border-top-color:#555460; }
+footer>span { color:#aaa6b5; }
+footer .brand { color:#cbb8ef; }
+dialog { background:#23242c; }
+dialog>p:not(.kicker),.export-option small { color:#bbb6c8; }
+.export-option { background:#191a22; }
+
+/* Orchid adds a distinct creative accent alongside blue, cyan, and navy. */
+:root { --orchid:#ee9bd4; --orchid-soft:#f7c5e7; --orchid-surface:#38273b; }
+.control-heading span { background:var(--orchid); color:#352036; }
+.intro .quiet { background:var(--orchid-surface); color:var(--orchid-soft); border-color:#a46799; }
+.editor-tip > span,.font-specimen { color:var(--orchid); }
+.segmented .selected,.fold-options .selected { background:var(--orchid-surface)!important; color:#ffe2f5!important; border-color:var(--orchid)!important; box-shadow:2px 2px #865378; }
+#add-layer { color:var(--orchid-soft); border-color:#a46799; }
+.track:nth-child(3n+1) i { background:#70456e; color:#ffe2f5; border-color:var(--orchid); }
+.track.chosen { outline-color:var(--orchid); }
+.templates .template:nth-child(3n+1):hover { box-shadow:5px 5px var(--orchid); }
+#controls .swatches button.selected { box-shadow:0 0 0 2px var(--orchid); }
+button:focus-visible,a:focus-visible,input:focus-visible,textarea:focus-visible,select:focus-visible { outline-color:var(--orchid); }

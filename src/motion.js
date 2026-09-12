@@ -654,7 +654,14 @@ export function mountMotion({ getCard, notify, stopFold, onChange }) {
     g.clearRect(0, 0, 900, 700);
     layerDraw(
       g,
-      { ...l, x: 0.5, y: 0.5, start: 0, end: design.duration },
+      {
+        ...l,
+        color: getCard().ink,
+        x: 0.5,
+        y: 0.5,
+        start: 0,
+        end: design.duration,
+      },
       (open / 100) * design.duration,
       900,
       700,

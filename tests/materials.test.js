@@ -46,3 +46,17 @@ test("Creative library exposes unique identifiers and bounded sticker lists", ()
     12,
   );
 });
+
+test("Custom card colors survive links and reject unsafe or malformed values", () => {
+  const v = validate({
+    ...defaults,
+    customColors: {
+      paper: "#123456",
+      ink: "#fedcba",
+      accent: "bad",
+      unknown: "#112233",
+    },
+  });
+  assert.deepEqual(v.customColors, { paper: "#123456", ink: "#fedcba" });
+  assert.deepEqual(decode(encode(v)), v);
+});
