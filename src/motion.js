@@ -1,3 +1,4 @@
+import { fonts, stickers } from "./library.js";
 import {
   initial,
   formats,
@@ -41,7 +42,7 @@ export function mountMotion({ getCard, notify, stopFold, onChange }) {
   const section = document.createElement("section");
   section.id = "motion-studio";
   section.hidden = true;
-  section.innerHTML = `<div class="motion-controls"><p class="kicker">MAKE WORDS PERFORM</p><div class="motion-actions"><button id="add-layer">+ Text</button><button id="from-card">Use card text</button></div><label>Text layer<select id="layer-list"></select></label><div id="layer-controls"></div><button id="delete-layer">Remove layer</button><hr><label>Poster format<select id="poster-format"><option value="square">Square · 1080 × 1080</option><option value="portrait">Portrait · 1080 × 1350</option><option value="landscape">Landscape · 1440 × 810</option></select></label><label>Background<input id="poster-bg" type="color"></label><label><input id="fold-link" type="checkbox"> Tie this animation to the card opening</label><p class="fine">Drag text to move it. Drag the blue cross to position the effect. Coordinates are also editable below.</p></div><div class="motion-stage"><div class="motion-toolbar"><span>LIVE MOTION CANVAS</span><button id="poster-png">PNG ↓</button><button id="poster-video">Export video ↓</button><button id="cancel-video" hidden>Cancel export</button></div><div class="poster-wrap"><canvas id="poster" aria-label="Animated typography poster"></canvas></div><div class="motion-transport"><button id="motion-play">▶ Play</button><input id="motion-time" type="range" min="0" max="6" step="0.01" aria-label="Timeline playhead"><output id="motion-clock">0.00s</output><label>Length <input id="motion-duration" type="number" min="2" max="20" step="1"> s</label><label><input id="motion-loop" type="checkbox"> Loop</label></div><div id="motion-tracks"></div><p id="motion-status" role="status">Select a layer to shape its motion.</p><div class="motion-files"><button id="motion-share">Copy motion link ↗</button><button id="motion-save">Save editable design ↓</button><label>Import design<input id="motion-import" type="file" accept=".json,application/json"></label></div><div id="video-result"></div></div>`;
+  section.innerHTML = `<div class="motion-controls"><p class="kicker">MAKE WORDS PERFORM</p><div class="motion-actions"><button id="add-layer">+ Text</button><button id="from-card">Use card text</button></div><label>Add sticker layer<select id="motion-sticker"><option value="">Choose a sticker…</option>${stickers.map(([id, glyph, name]) => `<option value="${id}">${glyph} ${name}</option>`).join("")}</select></label><label>Text layer<select id="layer-list"></select></label><div id="layer-controls"></div><button id="delete-layer">Remove layer</button><hr><label>Poster format<select id="poster-format"><option value="square">Square · 1080 × 1080</option><option value="portrait">Portrait · 1080 × 1350</option><option value="landscape">Landscape · 1440 × 810</option></select></label><label>Background<input id="poster-bg" type="color"></label><label><input id="fold-link" type="checkbox"> Tie this animation to the card opening</label><p class="fine">Drag text to move it. Drag the blue cross to position the effect. Coordinates are also editable below.</p></div><div class="motion-stage"><div class="motion-toolbar"><span>LIVE MOTION CANVAS</span><button id="poster-png">PNG ↓</button><button id="poster-video">Export video ↓</button><button id="cancel-video" hidden>Cancel export</button></div><div class="poster-wrap"><canvas id="poster" aria-label="Animated typography poster"></canvas></div><div class="motion-transport"><button id="motion-play">▶ Play</button><input id="motion-time" type="range" min="0" max="6" step="0.01" aria-label="Timeline playhead"><output id="motion-clock">0.00s</output><label>Length <input id="motion-duration" type="number" min="2" max="20" step="1"> s</label><label><input id="motion-loop" type="checkbox"> Loop</label></div><div id="motion-tracks"></div><p id="motion-status" role="status">Select a layer to shape its motion.</p><div class="motion-files"><button id="motion-share">Copy motion link ↗</button><button id="motion-save">Save editable design ↓</button><label>Import design<input id="motion-import" type="file" accept=".json,application/json"></label></div><div id="video-result"></div></div>`;
   nav.after(section);
   const canvas = $("#poster"),
     ctx = canvas.getContext("2d");
@@ -90,7 +91,7 @@ export function mountMotion({ getCard, notify, stopFold, onChange }) {
       )
       .join("");
     $("#layer-controls").innerHTML =
-      `<label>Words<textarea data-motion="text" maxlength="120" rows="3">${html(l.text)}</textarea></label><label>Effect<select data-motion="effect">${effects.map((v) => `<option ${l.effect === v ? "selected" : ""}>${v}</option>`).join("")}</select></label><div class="motion-pair"><label>Typeface<select data-motion="font">${["Impact", "Georgia", "monospace"].map((v) => `<option ${l.font === v ? "selected" : ""}>${v}</option>`).join("")}</select></label><label>Ink<input data-motion="color" type="color" value="${l.color}"></label></div>${[
+      `<label>Words<textarea data-motion="text" maxlength="120" rows="3">${html(l.text)}</textarea></label><label>Effect<select data-motion="effect">${effects.map((v) => `<option ${l.effect === v ? "selected" : ""}>${v}</option>`).join("")}</select></label><div class="motion-pair"><label>Typeface<select data-motion="font">${[...new Set(["Impact", ...Object.values(fonts).map((f) => f.family)])].map((v) => `<option value="${html(v)}" ${l.font === v ? "selected" : ""}>${html(v.replaceAll('"', ""))}</option>`).join("")}</select></label><label>Ink<input data-motion="color" type="color" value="${l.color}"></label></div>${[
         ["size", "Size", 16, 240],
         ["rotation", "Rotation", -180, 180],
         ["intensity", "Intensity", 0, 100],
@@ -344,6 +345,31 @@ export function mountMotion({ getCard, notify, stopFold, onChange }) {
       end: design.duration,
     });
     selected = design.layers.at(-1).id;
+    controls();
+    draw();
+    save();
+  };
+  $("#motion-sticker").onchange = (e) => {
+    const item = stickers.find(([id]) => id === e.target.value);
+    if (!item) return;
+    if (design.layers.length >= 8) {
+      notify("Eight layers maximum. Remove one to add a sticker.");
+      e.target.value = "";
+      return;
+    }
+    design.layers.push({
+      ...initial().layers[0],
+      id: Math.max(...design.layers.map((l) => l.id)) + 1,
+      text: item[1],
+      font: "Arial",
+      size: 180,
+      color: "#cbb4f0",
+      effect: "spring",
+      start: 0,
+      end: design.duration,
+    });
+    selected = design.layers.at(-1).id;
+    e.target.value = "";
     controls();
     draw();
     save();
@@ -634,6 +660,11 @@ export function mountMotion({ getCard, notify, stopFold, onChange }) {
       700,
     );
   }
+  document.fonts.ready.then(() => {
+    cache.clear();
+    tintCache.clear();
+    draw();
+  });
   controls();
   draw();
   syncFold(getCard().opening);

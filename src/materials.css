@@ -1,0 +1,83 @@
+#materials-layer {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+.font-specimen {
+  padding: 14px 0 20px;
+  color: #d9c6f4;
+  font-size: 24px;
+  overflow-wrap: anywhere;
+}
+.sticker-shelf {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin: 15px 0 23px;
+}
+.sticker-shelf button {
+  padding: 7px 2px;
+  font: 23px Arial;
+  color: #cbb4f0;
+  background: #25243b;
+  border-color: #605471;
+}
+.sticker-shelf button:nth-child(3n + 2) {
+  color: #f4dc83;
+}
+.sticker-shelf button:nth-child(3n) {
+  color: #9adbc0;
+}
+.sticker-fields {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 10px;
+}
+.tabs button {
+  font-size: 10px;
+}
+.template-grid {
+  grid-template-columns: repeat(5, minmax(0, 1fr));
+}
+.mini span {
+  font-size: 28px;
+}
+.mini b {
+  font-size: 50px;
+}
+.template-caption {
+  flex-wrap: wrap;
+  gap: 7px;
+}
+.template-caption strong {
+  line-height: 1.4;
+}
+.sticker-fields input {
+  width: 100%;
+}
+#controls input[type="color"] {
+  height: 36px;
+  width: 100%;
+}
+@media (max-width: 1100px) {
+  .template-grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+@media (max-width: 760px) {
+  .template-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+  .sticker-shelf,
+  .sticker-fields {
+    grid-column: 1/-1;
+  }
+  .font-specimen {
+    grid-column: 1/-1;
+  }
+  .tabs button {
+    font-size: 9px;
+  }
+}

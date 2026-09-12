@@ -1,3 +1,4 @@
+import { fonts } from "./library.js";
 export const formats = {
   square: [1080, 1080],
   portrait: [1080, 1350],
@@ -75,7 +76,12 @@ export function validateMotion(v) {
         size: n(l.size, 100, 16, 240),
         rotation: n(l.rotation, 0, -180, 180),
         color: hex(l.color, "#c8deff"),
-        font: ["Impact", "Georgia", "monospace"].includes(l.font)
+        font: [
+          "Impact",
+          "Georgia",
+          "monospace",
+          ...Object.values(fonts).map((f) => f.family),
+        ].includes(l.font)
           ? l.font
           : "Impact",
         effect: effects.includes(l.effect) ? l.effect : "wave",

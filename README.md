@@ -11,9 +11,11 @@ npm run dev -- --port 3106
 
 ## Features
 
-- Four editable card templates and five coordinated palettes
+- Ten editable card templates and five coordinated palettes
 - Pop-up, accordion-inspired, and gatefold-inspired CSS 3D reveals
-- Text, fonts, sizes, paper patterns, and embellishments
+- Nine card font choices, including six bundled font families also available in Motion
+- Eighteen stickers with position, size, rotation, and color controls; stickers can also become animated Motion layers
+- Eight paper textures and four decorative frame styles, included in PNG and print exports
 - Opening slider, animated reveal, and view rotation
 - Browser-local autosave, editable JSON backups and imports
 - Share links containing the design (no server storage)

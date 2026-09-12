@@ -761,3 +761,115 @@ dialog > p:not(.kicker),
 .swatches button {
   color: initial;
 }
+
+/* Blue anchors the studio; materials and tools use their own accent colors. */
+:root {
+  --mint: #9adbc0;
+  --butter: #f4dc83;
+  --lilac: #cbb4f0;
+}
+.primary,
+.primary:hover {
+  background: var(--mint);
+  color: #152f27;
+  border-color: #b3efd5;
+  box-shadow: 3px 3px #355c51;
+}
+.primary:hover {
+  background: #b3efd5;
+}
+.intro .quiet {
+  background: #262439;
+  color: var(--lilac);
+  border-color: #74668d;
+}
+.control-heading span {
+  background: var(--lilac);
+  color: #2b203b;
+}
+.editor-tip > span {
+  color: var(--butter);
+}
+.preview-top i {
+  background: var(--mint);
+}
+.playback button,
+.playback button:hover {
+  background: var(--butter);
+  color: #302a1b;
+}
+.playback button:hover {
+  background: #ffecac;
+}
+.playback input[type="range"] {
+  accent-color: var(--butter);
+}
+.playback output {
+  color: var(--butter);
+}
+.segmented .selected,
+.fold-options .selected {
+  background: #3b3051 !important;
+  color: #e9dafa !important;
+  border-color: var(--lilac) !important;
+  box-shadow: 2px 2px #75618e;
+}
+.swatches button.selected {
+  background: revert !important;
+  box-shadow: 0 0 0 2px var(--butter);
+  border-color: #101827 !important;
+}
+.swatches button {
+  color: inherit;
+}
+.swatches button.selected {
+  background-color: var(--swatch) !important;
+}
+.template:nth-child(2):hover {
+  box-shadow: 5px 5px var(--butter);
+}
+.template:nth-child(3):hover {
+  box-shadow: 5px 5px var(--lilac);
+}
+.template:nth-child(4):hover {
+  box-shadow: 5px 5px var(--mint);
+}
+#add-layer {
+  color: var(--lilac);
+  border-color: #87709e;
+}
+#motion-play {
+  background: var(--butter);
+  color: #302a1b;
+  border-color: #f8e6a8;
+}
+#poster-video,
+#video-result a,
+.save-png {
+  background: var(--mint);
+  color: #152f27;
+  border-color: #b3efd5;
+}
+#poster-png,
+#motion-save {
+  color: var(--butter);
+  border-color: #8f8258;
+}
+.track:nth-child(3n + 1) i {
+  background: #76629b;
+  color: #fff3ff;
+  border-color: var(--lilac);
+}
+.track:nth-child(3n + 2) i {
+  background: #376659;
+  color: #e0fff1;
+  border-color: var(--mint);
+}
+.track:nth-child(3n) i {
+  background: #74643a;
+  color: #fff2c4;
+  border-color: var(--butter);
+}
+#motion-time {
+  accent-color: var(--butter);
+}
